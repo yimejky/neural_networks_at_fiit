@@ -7,4 +7,8 @@ def stochastic_gradient_descent(self, xs, ys, num_epochs=10, batch_size=2):
     :param batch_size: Number of samples in batches.
     :return: None
     """
-    ...  # FIXME: 2.13
+    for _ in range(num_epochs):
+        ...
+        for _ in range(...):
+            self.step(..., ...)
+    # FIXME: 2.13

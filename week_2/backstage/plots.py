@@ -5,7 +5,6 @@ from time import sleep
 from ipywidgets import *
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d, Axes3D
 
 from week_2.backstage.load_data import load_data
 from solutions.week_2.model import LinearRegressionModel
@@ -185,12 +184,12 @@ def gd_plot():
 def add_magic(model, speed=2):
 
     model._m = types.SimpleNamespace()
-    ends = np.array([3, -3])
+    ends = np.array([[3], [-3]])
 
     def wrap_step(model_step):
         def new_step(self, xs, ys):
             self._m.ax1.plot(self.w, self.b, 'w.')
-            self._m.ax2_line.set_ydata([self.predict(end) for end in ends])
+            self._m.ax2_line.set_ydata(self.predict(ends))
             self._m.txt.set_text(f'w: {self.w[0]:.2f}\nb: {self.b:.2f}\nloss: {self.loss(*self._m.data):.3f}')
 
             model_step(xs, ys)
@@ -219,7 +218,7 @@ def add_magic(model, speed=2):
             Z = np.zeros_like(X)
             w, b = model.w, model.b
             for i, j in itertools.product(range(Z.shape[0]), range(Z.shape[1])):
-                model.w = xlist[i]
+                model.w = [xlist[i]]
                 model.b = ylist[j]
                 Z[j, i] = self.loss(xs, ys)
             model.w, model.b = w, b
@@ -233,7 +232,7 @@ def add_magic(model, speed=2):
             self._m.ax2.set_xlabel('$x_1$')
             self._m.ax2.set_ylabel('$y$')
             self._m.ax2.set_title('$\hat{y} = w_1x_1 + b$')
-            self._m.ax2_line, = self._m.ax2.plot(ends, [self.predict(end) for end in ends], scalex=False, scaley=False)
+            self._m.ax2_line, = self._m.ax2.plot(ends, self.predict(ends), scalex=False, scaley=False)
             self._m.fig.canvas.draw()
 
             model_gd(xs, ys, **kwargs)
@@ -273,7 +272,7 @@ def stochastic_plot():
         w, b = model.w, model.b
         for i, j in itertools.product(range(Z.shape[0]), range(Z.shape[1])):
             model.b = ylist[j]
-            model.w = xlist[i]
+            model.w = [xlist[i]]
             Z[j, i] = model.loss(ax_xs, ax_ys)
         model.w, model.b = [w], b
 
@@ -294,7 +293,7 @@ def stochastic_plot():
                 ax_xs, ax_ys = xs[ax_id, :], [ys[ax_id]]
 
             model.w, model.b = [w1], b
-            dw, db = model.compute_gradients(ax_xs, ax_ys)
+            dw, db = model.gradient(ax_xs, ax_ys)
             arrows.append(ax.arrow(model.w, model.b, -dw[0] * 0.1, -db * 0.1, color='white', head_width=0.2))
 
     interact(show_arrows)

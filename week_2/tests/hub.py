@@ -5,10 +5,18 @@ from week_2.tests.sgd_test import TestSGD
 
 
 def model_test():
+    """
+    Tests for Programming Assignment 2.9
+    :return: number of error and failures
+    """
     return run_test(TestLinearRegressionModel)
 
 
 def sgd_test():
+    """
+    Tests for Programming Assignment 2.13
+    :return: number of error and failures
+    """
     return run_test(TestSGD)
 
 

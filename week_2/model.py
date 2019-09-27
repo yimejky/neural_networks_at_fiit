@@ -23,22 +23,22 @@ class LinearRegressionModel:
         self.w = np.zeros(input_dim) if w is None else w
         self.b = b
 
-    def predict(self, x):
+    def predict(self, xs):
         """
-        Runs the linear regression model over input vector x and computes the predicted value y^
+        Runs the linear regression model over multiple input vectors xs. xs is a matrix, where i-th row is a feature
+        vector of i-th sample. Method returns a numpy array where i-th element is a prediction for i-th sample from xs.
 
-        :param x: np.array dim=(input_dim)
-        :return: float
+        :param xs: 2D np.array dim=(num_samples, input_dim)
+        :return: np.array dim=(num_samples)
         """
         return ...  # FIXME: 2.9.1
 
-    def gradients(self, xs, ys):
+    def gradient(self, xs, ys):
         """
-        Computes the derivatives of loss function L w.r.t parameters w and b. Note that the attributes xs and ys are
-        not one sample, but multiple samples. xs is a matrix, where i-th row is i-th sample feature vector and
-        ys is a vector, where i-th element is a true score for i-th sample.
+        Computes the derivatives of loss function L w.r.t parameters w and b. ys is a vector, where i-th element
+        is a true score for i-th sample.
 
-        xs and ys will have the same intrepretation for following methods as well.
+        xs and ys will have the same interpretation for following methods as well.
 
         :param xs:  2D np.array dim=(num_samples, input_dim)
         :param ys:  np.array dim=(num_samples)
@@ -63,7 +63,7 @@ class LinearRegressionModel:
         """
         Performs one gradient descent step and updates the parameters accordingly.
         """
-        dw, db = self.compute_gradients(xs, ys)
+        dw, db = self.gradient(xs, ys)
         self.w = ...  # FIXME: 2.9.3
         self.b = ...
 
@@ -74,23 +74,3 @@ class LinearRegressionModel:
         :return: float
         """
         return ...  # FIXME: 2.9.4
-
-
-if __name__ == '__main__':
-    import week_2.tests.hub as tests
-    tests.model_test()
-    # tests.sgd_test() # FIXME: Uncomment this line for programming assignment 2.13
-
-
-
-
-
-
-
-
-
-
-
-
-
-

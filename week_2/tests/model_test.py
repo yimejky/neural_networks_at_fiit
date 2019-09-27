@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from week_2.model import LinearRegressionModel
+from solutions.week_2.model import LinearRegressionModel
 
 
 class TestLinearRegressionModel(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestLinearRegressionModel(unittest.TestCase):
     def setUp(self):
         self.model_1d = LinearRegressionModel(
             input_dim=1,
-            w=0.5,
+            w=np.array([0.5]),
             b=0.2)
         self.model_3d = LinearRegressionModel(
             input_dim=3,
@@ -37,20 +37,25 @@ class TestLinearRegressionModel(unittest.TestCase):
         )
 
     def test_predict(self):
-        self.assertAlmostEqual(
-            self.model_1d.predict(np.array([1.666])),
-            1.033)
-        self.assertAlmostEqual(
-            self.model_3d.predict(np.array([1, 5.7, 3])),
-            3.88)
+        for predicted, expected in zip(
+            self.model_1d.predict(self.data_1d[0]),
+            [0.8, 0.95, 0.85, 1.05]
+        ):
+            self.assertAlmostEqual(predicted, expected)
 
-    def test_compute_gradients(self):
-        dw, db = self.model_1d.compute_gradients(*self.data_1d)
+        for predicted, expected in zip(
+            self.model_3d.predict(self.data_3d[0]),
+            [1.79, 2.99, 0.59, 2.09]
+        ):
+            self.assertAlmostEqual(predicted, expected)
+
+    def test_gradient(self):
+        dw, db = self.model_1d.gradient(*self.data_1d)
         self.assertEqual(len(dw), 1)
         self.assertAlmostEqual(dw[0], -1.3375)
         self.assertAlmostEqual(db, -0.625)
 
-        dw, db = self.model_3d.compute_gradients(*self.data_3d)
+        dw, db = self.model_3d.gradient(*self.data_3d)
         self.assertEqual(len(dw), 3)
         for desired, computed in zip([5.876, 4.775, 4.219], dw):
             self.assertAlmostEqual(desired, computed)
