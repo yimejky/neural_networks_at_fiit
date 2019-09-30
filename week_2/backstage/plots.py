@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from week_2.backstage.load_data import load_data
-from solutions.week_2.model import LinearRegressionModel
+from week_2.model import LinearRegressionModel
 from mpl_toolkits.mplot3d import Axes3D
 
 
@@ -268,7 +268,6 @@ def stochastic_plot():
             ax_xs, ax_ys = data.x, data.y
         else:
             ax_xs, ax_ys = np.array([xs[ax_id, :]]), [ys[ax_id]]
-        print(ax_xs)
 
         w, b = model.w, model.b
         for i, j in itertools.product(range(Z.shape[0]), range(Z.shape[1])):
