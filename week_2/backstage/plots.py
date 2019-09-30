@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 from week_2.backstage.load_data import load_data
 from week_2.model import LinearRegressionModel
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def one_d_plot():
@@ -18,7 +19,6 @@ def one_d_plot():
             w1=widgets.FloatSlider(min=-10, max=10, step=0.1, value=1.5),
             b=(-5.0, 5.0, 0.1),
             use_bias=True):
-        print(repr(fig))
         fig.clf()
 
         Y = w1 * X
