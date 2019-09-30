@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from week_2.backstage.load_data import load_data
-from solutions.week_2.model import LinearRegressionModel
+from week_2.model import LinearRegressionModel
 
 
 def one_d_plot():
