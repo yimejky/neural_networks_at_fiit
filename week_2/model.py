@@ -1,5 +1,6 @@
 import numpy as np
-
+import random
+import math
 
 class LinearRegressionModel:
     """
@@ -31,7 +32,7 @@ class LinearRegressionModel:
         :param xs: 2D np.array dim=(num_samples, input_dim)
         :return: np.array dim=(num_samples)
         """
-        return ...  # FIXME: 2.9.1
+        return self.w @ xs.T + self.b
 
     def gradient(self, xs, ys):
         """
@@ -44,8 +45,13 @@ class LinearRegressionModel:
         :param ys:  np.array dim=(num_samples)
         :return:    np.array dim=(input_dim), float
         """
-        dw = ...  # FIXME: 2.9.2
-        db = ...
+        dw = 0
+        e = -2 * (ys - self.predict(xs))
+        for i, v in enumerate(e):
+            dw += v * xs[i]
+     
+        dw = dw / len(e)
+        db = np.average(e)
         return dw, db
 
     def gradient_descent(self, xs, ys, num_steps=100):
@@ -58,14 +64,29 @@ class LinearRegressionModel:
         """
         for _ in range(num_steps):
             self.step(xs, ys)
+            
+    def stochastic_gradient_descent(self, xs, ys, num_epochs=10, batch_size=2):
+        """
+        Performs a stochastic gradient descent training over the data xs, ys.
+
+        :param num_epochs: Number of epochs for the training.
+        :param batch_size: Number of samples in batches.
+        :return: None
+        """
+        ixs = list(range(len(xs)))
+        for _ in range(num_epochs):
+            random.shuffle(ixs)
+            for i in range(0, len(xs), batch_size):
+                ind = ixs[i: i + batch_size]
+                self.step(xs[ind], ys[ind])
 
     def step(self, xs, ys):
         """
         Performs one gradient descent step and updates the parameters accordingly.
         """
         dw, db = self.gradient(xs, ys)
-        self.w = ...  # FIXME: 2.9.3
-        self.b = ...
+        self.w = self.w - self.lr * dw
+        self.b = self.b - self.lr * db
 
     def loss(self, xs, ys):
         """
@@ -73,4 +94,5 @@ class LinearRegressionModel:
 
         :return: float
         """
-        return ...  # FIXME: 2.9.4
+        tmp = self.predict(xs)
+        return np.sum((tmp - ys) ** 2) / len(tmp)
