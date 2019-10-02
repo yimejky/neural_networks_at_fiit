@@ -1,10 +1,11 @@
 import numpy as np
 
-
-class MLP:
-
-    ...
+from week_3.backstage.load_data import load_data
 
 
-a = MLP(2, 100, 2)
-a.sgd(np.random.rand(50, 2) - 0.5, np.random.rand(50, 2))
+
+
+
+a = MultilayerPerceptron(4, 10, 3)
+data = load_data('iris.csv', 3)
+a.stochastic_gradient_descent(data.x, data.y)
