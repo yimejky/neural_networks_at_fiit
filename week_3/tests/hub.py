@@ -1,5 +1,6 @@
 import unittest
 
+from week_3.tests.accuracy_test import TestAccuracy
 from week_3.tests.mlp_test import TestMultilayerPerceptron
 
 
@@ -9,6 +10,14 @@ def mlp_test():
     :return: number of error and failures
     """
     return run_test(TestMultilayerPerceptron)
+
+
+def accuracy_test():
+    """
+    Tests for Programming Assignment 3.6
+    :return: number of error and failures
+    """
+    return run_test(TestAccuracy)
 
 
 def run_test(test_cls):
