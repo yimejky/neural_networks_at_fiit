@@ -5,6 +5,9 @@ import numpy as np
 
 def load_data(filename, num_classes, normalize=False, *args):
     data = np.genfromtxt(f'data/{filename}', *args)
+    np.random.seed(0)
+    order = np.random.permutation(data.shape[0])
+    data = data[order]
     output = types.SimpleNamespace()
     output.x = data[:, :-1]
     if normalize:
