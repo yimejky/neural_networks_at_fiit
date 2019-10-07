@@ -45,13 +45,9 @@ class LinearRegressionModel:
         :param ys:  np.array dim=(num_samples)
         :return:    np.array dim=(input_dim), float
         """
-        dw = 0
         e = -2 * (ys - self.predict(xs))
-        for i, v in enumerate(e):
-            dw += v * xs[i]
-     
-        dw = dw / len(e)
-        db = np.average(e)
+        dw = np.array([v * xs[i] for i, v in enumerate(e)]).mean(axis=0)
+        db = e.mean()
         return dw, db
 
     def gradient_descent(self, xs, ys, num_steps=100):
