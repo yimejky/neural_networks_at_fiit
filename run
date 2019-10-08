@@ -1,0 +1,1 @@
+docker run -u 501:20 -p 8888:8888 -v /Users/yimejky/fiit_4_1/nsiete/neural_networks_at_fiit:/labs -it mpikuliak/nsiete

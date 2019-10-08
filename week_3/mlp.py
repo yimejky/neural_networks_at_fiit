@@ -85,10 +85,10 @@ class MultilayerPerceptron:
             h:     np.array dim=?
             z_1:   np.array dim=?
         """
-        z_1 = ...  # FIXME: 3.4.1
-        h = ...
-        z_2 = ...
-        y_hat = ...
+        z_1 = np.dot(self.w_1, x) + self.b_1
+        h = self.sigma(z_1)
+        z_2 = np.dot(self.w_2, h) + self.b_2
+        y_hat = self.sigma(z_2)
         return y_hat, z_2, h, z_1
 
     def gradient(self, x, y):
@@ -105,8 +105,18 @@ class MultilayerPerceptron:
             db_2: np.array dim=?
         """
         y_hat, z_2, h, z_1 = self.predict(x)
-        dz_2 = ...  # FIXME: 3.4.2
-        db_2 = ...
-        dw_2 = ...
-        ...  # Continue with first layer parameters
+        dz_2 = np.multiply(2 * (y_hat - y), self.dsigma(z_2))
+        db_2 = dz_2
+        dw_2 = np.outer(dz_2, h)
+        dz_1 = np.multiply(np.dot(self.w_2.T, dz_2), self.dsigma(z_1))
+        db_1 = dz_1
+        dw_1 = np.outer(dz_1, x)
         return dw_1, db_1, dw_2, db_2
+    
+    def accuracy(self, xs, ys):
+        """
+        Measures the accuracy of the model, i.e. how many xs has the right y predicted.
+
+        :return: float
+        """
+        return np.array([ys[i][self.predict(x)[0].argmax()] for i, x in enumerate(xs)]).sum() / len(xs)
