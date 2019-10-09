@@ -7,7 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from week_2.backstage.load_data import load_data
-from solutions.week_2.model import LinearRegressionModel
+from week_2.model import LinearRegressionModel
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def one_d_plot():
@@ -18,7 +19,6 @@ def one_d_plot():
             w1=widgets.FloatSlider(min=-10, max=10, step=0.1, value=1.5),
             b=(-5.0, 5.0, 0.1),
             use_bias=True):
-        print(repr(fig))
         fig.clf()
 
         Y = w1 * X
@@ -267,7 +267,7 @@ def stochastic_plot():
         if ax_id == len(data.y):
             ax_xs, ax_ys = data.x, data.y
         else:
-            ax_xs, ax_ys = xs[ax_id, :], [ys[ax_id]]
+            ax_xs, ax_ys = np.array([xs[ax_id, :]]), [ys[ax_id]]
 
         w, b = model.w, model.b
         for i, j in itertools.product(range(Z.shape[0]), range(Z.shape[1])):
@@ -290,7 +290,7 @@ def stochastic_plot():
             if ax_id == len(data.y):
                 ax_xs, ax_ys = data.x, data.y
             else:
-                ax_xs, ax_ys = xs[ax_id, :], [ys[ax_id]]
+                ax_xs, ax_ys = np.array([xs[ax_id, :]]), [ys[ax_id]]
 
             model.w, model.b = [w1], b
             dw, db = model.gradient(ax_xs, ax_ys)

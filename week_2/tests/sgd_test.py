@@ -3,7 +3,7 @@ import unittest
 
 import numpy as np
 
-from solutions.week_2.model import LinearRegressionModel
+from week_2.model import LinearRegressionModel
 
 
 class TestSGD(unittest.TestCase):
