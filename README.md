@@ -22,11 +22,11 @@ available as a student through MSDNAA.
 
     For UNIX based systems:
 
-    `docker run -u $(id -u):$(id -g) -p 8888:8888 -v $(pwd):/labs -it mpikuliak/nsiete`
+    `docker run -u $(id -u):$(id -g) -p 8888:8888 -p 6006:6006 -v $(pwd):/labs -it mpikuliak/nsiete`
 
     For Windows:
     
-    `docker run -p 8888:8888 -v c:/path/to/repo:/labs -it mpikuliak/nsiete`
+    `docker run -p 8888:8888 -p 6006:6006 -v c:/path/to/repo:/labs -it mpikuliak/nsiete`
     
     You should only change the `c:/path/to/repo`. Leave the `:/labs` at
     the end of `-v` flag there.
