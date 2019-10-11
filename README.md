@@ -45,4 +45,4 @@ you should be all set.
 You might wish to run the image without Jupyter, e.g. to run your
 Python scripts. In that case just change the container entrypoint:
 
-`docker run -u $(id -u):$(id -g) -p 8888:8888 -v $(pwd):/labs -it --entrypoint '/bin/bash' mpikuliak/nsiete`
+`docker run -u $(id -u):$(id -g) -p 8888:8888 -p 6006:6006 -v $(pwd):/labs -it --entrypoint '/bin/bash' mpikuliak/nsiete`
