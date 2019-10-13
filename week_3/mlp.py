@@ -105,10 +105,10 @@ class MultilayerPerceptron:
             db_2: np.array dim=?
         """
         y_hat, z_2, h, z_1 = self.predict(x)
-        dz_2 = np.multiply(2 * (y_hat - y), self.dsigma(z_2))
+        dz_2 = (2 * (y_hat - y)) * self.dsigma(z_2)
         db_2 = dz_2
         dw_2 = np.outer(dz_2, h)
-        dz_1 = np.multiply(np.dot(self.w_2.T, dz_2), self.dsigma(z_1))
+        dz_1 = self.w_2.T @ dz_2 * self.dsigma(z_1)
         db_1 = dz_1
         dw_1 = np.outer(dz_1, x)
         return dw_1, db_1, dw_2, db_2
@@ -119,4 +119,8 @@ class MultilayerPerceptron:
 
         :return: float
         """
-        return np.array([ys[i][self.predict(x)[0].argmax()] for i, x in enumerate(xs)]).sum() / len(xs)
+        tmp = np.array([])
+        for i, x in enumerate(xs):
+            item = ys[i][self.predict(x)[0].argmax()]
+            tmp = np.append(tmp, item)
+        return tmp.mean()
