@@ -28,22 +28,59 @@ class Inception(Layer):
         """
         super(Inception, self).__init__()
 
-        # FIXME: Initialize all the layers you need for the Inception layer
+        # first
         self.conv1 = Conv2D(
+            filters=filters,
+            kernel_size=1,
+            padding='same',
+            activation=activation)
+
+        # second
+        self.conv2 = Conv2D(
+            filters=filters,
+            kernel_size=1,
+            padding='same',
+            activation=activation)
+        self.conv3 = Conv2D(
             filters=filters,
             kernel_size=3,
             padding='same',
             activation=activation)
-        self.conv2 = Conv2D(
+        
+        # third
+        self.conv4 = Conv2D(
             filters=filters,
-            kernel_size=3,
+            kernel_size=1,
+            padding='same',
+            activation=activation)
+        self.conv5 = Conv2D(
+            filters=filters,
+            kernel_size=5,
+            padding='same',
+            activation=activation)
+        
+        # fourth
+        self.pool1 = MaxPooling2D(pool_size=(3, 3), strides=(1, 1), padding='same')
+        self.conv6 = Conv2D(
+            filters=filters,
+            kernel_size=1,
             padding='same',
             activation=activation)
 
     def call(self, x):
-        # FIXME: Build the Inception layer
-        x = self.conv1(x)
-        x = self.conv2(x)
+        c1 = self.conv1(x)
+       
+        c2 = self.conv2(x)
+        c2 = self.conv3(c2)
+        
+        c3 = self.conv4(x)
+        c3 = self.conv5(c3)
+        
+        c4 = self.pool1(x)
+        c4 = self.conv6(c4)
+        
+        x = concatenate([c1, c2, c3, c4])
+
         return x
 
 
